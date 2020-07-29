@@ -7,4 +7,5 @@ module.exports = (router)=>{
     router.get('/customers/:name',Customers.getCustumer);
     router.put('/update/:id',Customers.updateCustumer);
     router.delete('/remove/:id',Customers.removeCustumers);
+    router.get('/find/:name/:firsLastName/:secondLastName',Customers.findCustumer);
 }

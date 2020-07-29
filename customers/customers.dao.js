@@ -19,6 +19,9 @@ customerSchema.statics = {
     },
     delete: function(query, cb){
       this.findOneAndDelete(query, cb);
+    },
+    findFilter: function(query, cb){
+      this.find(query, cb) ;
     }
 }
 

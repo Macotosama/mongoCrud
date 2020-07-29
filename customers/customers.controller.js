@@ -56,3 +56,62 @@ exports.removeCustumers = (req, res, next)=>{
     });
     
 }
+
+exports.findCustumer = (req, res, next)=>{  
+    Customers.findFilter({name:req.params.name, firsLastName:req.params.firsLastName, secondLastName:req.params.secondLastName},(err, customers)=>{
+       if(req.params.name == "NULL"){
+            if(req.params.firsLastName == "NULL"){
+                if(req.params.secondLastName == "NULL"){
+                    res.json({Customers:customers});
+                }else{
+                    Customers.findFilter({secondLastName:req.params.secondLastName},(err, customers)=>{
+                        if(err) res.json({error: err});
+                        res.json({Customers:customers});
+                    });
+                }
+            }else{
+                if(req.params.secondLastName == "NULL"){
+                    res.json({Customers:customers});
+                }else{
+                    Customers.findFilter({secondLastName:req.params.secondLastName},(err, customers)=>{
+                        if(err) res.json({error: err});
+                        res.json({Customers:customers});
+                    });
+                }
+            }
+            
+       }else{
+        if(req.params.firsLastName == "NULL"){
+            if(req.params.secondLastName == "NULL"){
+                Customers.findFilter({name:req.params.name},(err, customers)=>{
+                    if(err) res.json({error: err});
+                    res.json({Customers:customers});
+                }
+                );
+            }else{
+                Customers.findFilter({secondLastName:req.params.secondLastName},(err, customers)=>{
+                    if(err) res.json({error: err});
+                    res.json({Customers:customers});
+                });
+            }
+        }else{
+            if(req.params.secondLastName){
+                Customers.findFilter({name:req.params.name,firsLastName:req.params.firsLastName},(err, customers)=>{
+                    if(err) res.json({error: err});
+                    res.json({Customers:customers});
+                });
+            }else{
+                Customers.findFilter({name:req.params.name,firsLastName:req.params.firsLastName,secondLastName:req.params.secondLastName},(err, customers)=>{
+                    if(err) res.json({error: err});
+                    res.json({Customers:customers});
+                });
+                }
+                    
+
+        }
+       }
+
+
+    });
+
+}
